@@ -2,7 +2,7 @@ import React from "react";
 import numeral from "numeral";
 import { Circle, Popup } from "react-leaflet";
 
-//Creating a sort of dictionary to represent appearance of the circles based on various cases i.e recovered, deaths
+
 const casesTypeColors = {
   cases: {
     hex: "#CC1034",
@@ -25,7 +25,6 @@ const casesTypeColors = {
 };
 
 export const sortData = (data) => {
-    //copying the data from above into an array
   let sortedData = [...data];
   sortedData.sort((a, b) => {
     if (a.cases > b.cases) {
@@ -36,17 +35,15 @@ export const sortData = (data) => {
   });
   return sortedData;
 };
-//Makes the text appear pretty and gives the +135k 
 export const prettyPrintStat = (stat) =>
   stat ? `+${numeral(stat).format("0.0a")}` : "+0";
 
-//Draws circles on the map with interactive tooltop
+//Drawing circles on the map with interactive tooltop
 
 export const showDataOnMap = (data, casesType = "cases") =>
   data.map((country) => (
     <Circle
       center={[country.countryInfo.lat, country.countryInfo.long]}
-      //line of code below accesses casesTypeColors variable, gets the case type and returns the color
       color={casesTypeColors[casesType].hex}
       fillColor={casesTypeColors[casesType].hex}
       fillOpacity={0.4}
@@ -55,7 +52,7 @@ export const showDataOnMap = (data, casesType = "cases") =>
         Math.sqrt(country[casesType]) * casesTypeColors[casesType].multiplier
       }
     >
-           {/*Popup that appears when we click the circle */}
+           {/*Popup that appears on clicking the circle on the map */}
       <Popup>
         <div className="info-container">
           <div
