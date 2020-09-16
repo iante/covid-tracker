@@ -13,7 +13,6 @@ const options = {
       },
     },
     maintainAspectRatio: false,
-    //allows you to see value in the graph when you hover on top of it
     tooltips: {
       mode: "index",
       intersect: false,
@@ -39,7 +38,6 @@ const options = {
             display: false,
           },
           ticks: {
-            // Include a dollar sign in the ticks
             callback: function (value, index, values) {
               return numeral(value).format("0a");
             },
@@ -58,7 +56,7 @@ const options = {
         if(lastDataPoint){
             const newDataPoint = {
                 x: date,
-                //gives us the difference between cases between days so that we can get new cases
+                // difference between cases between days (calculation of new cases)
                 y: data[casesType][date] - lastDataPoint
                 
               }
@@ -97,7 +95,6 @@ function LineGraph({ casesType= 'cases', ...props}){
       
         return (
             <div className={props.className}>
-              {/* checking if there is any data already renderd*/}
               {data?.length > 0 && (
                 <Line
                   data={{
