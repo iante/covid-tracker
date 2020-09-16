@@ -39,18 +39,14 @@ const App = () => {
 
   useEffect(() => {
     const getCountriesData = async () => {
-        //fetches data from the server
       fetch("https://disease.sh/v3/covid-19/countries")
-        //takes only the json data
         .then((response) => response.json())
-        .then((data) => { /*take the data from the server and go through
-      data about each counry in a loop and only get country and countryInfo.iso2 data*/
+        .then((data) => 
           const countries = data.map((country) => ({
             name: country.country, //i.e kenya
             value: country.countryInfo.iso2, //i.e KE
           }));
           let sortedData = sortData(data);
-           //pushing the. countries we requested from the server, to our useState
           setCountries(countries);
           
           //Getting all information about countries from the server API
@@ -58,19 +54,14 @@ const App = () => {
           setTableData(sortedData);
         });
     };
-//calling the getCountriesData function we just created above
+
     getCountriesData();
   }, []);
 
   console.log(casesType);
-
-    //its async because we are going to be making a call to it
   const onCountryChange = async (e) => {
-      //grabs the selected country by user
+     
     const countryCode = e.target.value;
-      
- /*Getting data of a particular country based on users selection of a country
-     If the country code is worldwide then make url as shown*/
     const url =
       countryCode === "worldwide"
         ? "https://disease.sh/v3/covid-19/all"
@@ -108,7 +99,7 @@ const App = () => {
           </FormControl>
         </div>
         <div className="app__stats">
-            {/* The onClick ={e => setCasesType('recovered')} sets the caseType as defined based on what the user clicks*/}
+        
           <InfoBox
             onClick={(e) => setCasesType("cases")}
             title="Coronavirus Cases(Today)"
@@ -135,7 +126,7 @@ const App = () => {
           />
         </div>
         <Map
-          countries={mapCountries} //passing mapCountries as a prop from map.js
+          countries={mapCountries} 
           casesType={casesType}
           center={mapCenter}
           zoom={mapZoom}
@@ -147,8 +138,7 @@ const App = () => {
             <h3>Live Cases by Country</h3>
             <Table countries={tableData} />
             <h3>Worldwide new {casesType}</h3>
-{/*casesType={casesType} changes the graph and map color based on
-what the user clicks i.e deaths, recovered */}
+
             <LineGraph casesType={casesType} />
           </div>
         </CardContent>
